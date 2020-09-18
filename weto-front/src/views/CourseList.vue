@@ -81,7 +81,8 @@
             </v-expansion-panels>
           </div>
         </v-card>
-      <p>Hello world! -Tiia</p>
+      <p>Hello World! -Tiia"</p>
+      <p>hello world -Miika</p>
       </v-container>
     </div>
   </div>
