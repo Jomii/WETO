@@ -82,7 +82,6 @@
           </div>
         </v-card>
       <p>Hello World! -Tiia"</p>
-      <p>hello world -Miika</p>
       </v-container>
     </div>
   </div>
