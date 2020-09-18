@@ -81,11 +81,7 @@
             </v-expansion-panels>
           </div>
         </v-card>
-<<<<<<< HEAD
-        <p>hello world -Paavo</p>
-=======
       <p>hello world -Miika</p>
->>>>>>> 628cdbd26649f89d607799ccec25b18d61939aec
       </v-container>
     </div>
   </div>
