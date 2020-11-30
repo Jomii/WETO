@@ -107,6 +107,24 @@
       </result>
     </action>
 
+    <action name="viewJSONSubmissions" class="fi.uta.cs.weto.actions.submissions.ViewSubmissions">
+      <result name="success" type="json">
+        <param name="encoding">UTF-8</param>
+      </result>
+    </action>
+
+    <action name="submitLoginJSON" class="fi.uta.cs.weto.actions.Login">
+      <result name="success" type="json">
+        <param name="encoding">UTF-8</param>
+      </result>
+      <result name="VIEWTASK" type="json">
+        <param name="encoding">UTF-8</param>
+      </result>
+      <result name="forward" type="json">
+        <param name="encoding">UTF-8</param>
+      </result>
+    </action>
+
     <action name="getUser" class="fi.uta.cs.weto.actions.front.GetUser">
       <result name="success" type="json">
         <param name="encoding">UTF-8</param>
@@ -134,5 +152,38 @@
         <param name="includeProperties">actionErrors\[\d+\], fieldErrors\..+$, actionMessages\[\d+\]</param>
       </result>
     </action>
+
+    <action name="viewJSONNodeGrades" class="fi.uta.cs.weto.actions.grading.ViewGradesActions$NodeGrades">
+      <result name="success" type="json" >
+        <param name="encoding">UTF-8</param>
+        <param name="excludeProperties">
+        <!-- longestString contains 2 billion chars per data field per student, we don't want that -->
+          students.*.longestString,
+          tasks.*.longestString
+        </param>
+      </result>
+    </action>
+
+    <action name="viewJSONStudentLeafGrades" class="fi.uta.cs.weto.actions.grading.ViewGradesActions$LeafGrades">
+      <result name="success" type="json">
+        <param name="encoding">UTF-8</param>
+        <param name="excludeProperties">
+        <!-- longestString contains 2 billion chars per data field per student, we don't want that -->
+          receiversList.*.longestString,
+          scoring.*.longestString,
+          visibleMembersMap.*.longestString
+        </param>
+      </result>
+    </action>
+
+    <action name="viewJSONGrade" class="fi.uta.cs.weto.actions.grading.GradeActions$View">
+      <result name="edit" type="json">
+        <param name="encoding">UTF-8</param>
+      </result>
+      <result name="view" type="json">
+        <param name="encoding">UTF-8</param>
+      </result>
+    </action>
+
   </package>
 </struts>

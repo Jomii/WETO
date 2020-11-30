@@ -7,7 +7,7 @@
       <v-btn v-else icon dark disabled>
         <v-icon>menu</v-icon>
       </v-btn>
-      
+
       <v-btn icon @click="appbarCollapse = !appbarCollapse">
         <v-icon v-if="appbarCollapse === false">chevron_left</v-icon>
         <v-icon v-else>chevron_right</v-icon>
@@ -28,7 +28,7 @@
         <v-btn text class="hidden-sm-and-down" router to="/groups">
           <v-icon left>group</v-icon>
           <span>GROUPS</span></v-btn>
-        
+
         <v-btn text fab class="hidden-md-and-up" router to="/task">
           <v-icon>home</v-icon>
         </v-btn>
@@ -46,7 +46,7 @@
         </v-btn>
       </v-toolbar-items>
     </v-app-bar>
-    
+
     <v-navigation-drawer
         app
         light
@@ -58,7 +58,7 @@
           <v-icon>clear</v-icon>
         </v-btn>
       </v-app-bar>
-      
+
       <v-list flat>
         <v-list-item-group>
           <v-list-item link v-if="courseName !== ''" router to="/">
@@ -81,7 +81,7 @@
               </h3>
             </v-list-item-content>
           </v-list-item>
-          
+
           <v-list-item link>
             <v-list-item-icon>
               <v-icon>face</v-icon>
@@ -93,7 +93,7 @@
               </h3>
             </v-list-item-content>
           </v-list-item>
-          
+
           <v-list-item v-if="courseName !== ''" @click="selectRootTask">
             <v-list-item-icon>
               <v-icon>info</v-icon>
@@ -104,13 +104,13 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-      
+
       <v-treeview :items="subTasks">
         <template slot="label" slot-scope="{ item }">
           <a @click="selectSubTask(item)">{{ item.name }}</a>
         </template>
       </v-treeview>
-      
+
       <v-list class="pa-0" dense v-if="courseSelected()">
         <v-list-item v-for="link in links" :key="link.text" router :to="link.route">
           <v-list-item-content>
@@ -160,8 +160,9 @@
       },
       selectSubTask(item) {
         this.$store.commit("setTask", item.id);
+        this.$router.replace('/task');
       }
     }
   }
-  
+
 </script>

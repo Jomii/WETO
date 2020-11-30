@@ -6,6 +6,7 @@ import Grading from './views/Grading.vue'
 import Forum from './views/Forum.vue'
 import Groups from './views/Groups.vue'
 import CourseList from './views/CourseList.vue'
+import Login from './views/Login.vue'
 
 Vue.use(Router)
 
@@ -15,6 +16,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/courses',
       name: 'courseList',
       component: CourseList
     },

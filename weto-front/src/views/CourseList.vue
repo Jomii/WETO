@@ -1,20 +1,16 @@
 <template>
   <div class="courseList">
-
     <div v-if="status === 'loading'" class="text-xs-center">
       <v-progress-circular indeterminate color="secondary" size="70" width="7"/>
     </div>
-
     <div v-if="status === 'error'" class="text-xs-center">
       <h4>Tapahtui virhe</h4>
     </div>
-
     <div v-if="status === 'normal'">
       <v-container v-for="subject in backendResponse.subjects" :key="subject.name" class="mt-6">
         <v-card>
           <h1 class="subjects pl-2">{{ subject.name }}</h1>
         </v-card>
-
         <v-card>
           <div clasS="activeCourses">
             <v-list v-if="backendResponse.registeredCourses[subject.id] !== null">
@@ -34,7 +30,6 @@
             </v-list>
           </div>
         </v-card>
-
         <v-card>
           <div class="availableCourses">
             <v-list v-if="backendResponse.courses[subject.id] !== null" class="availableCourses">
@@ -53,7 +48,6 @@
             </v-list>
           </div>
         </v-card>
-
         <v-card>
           <div v-if="backendResponse.inactiveCourses !== null" class="inactiveCourses">
             <v-expansion-panels>
@@ -81,10 +75,6 @@
             </v-expansion-panels>
           </div>
         </v-card>
-      <p>Hello World! -Tiia"</p>
-      <p>Hello World -Helen</p>
-      <p>Hello world -Allan</p>
-      <p>Hello world -Paavo</p>
       </v-container>
     </div>
   </div>
@@ -118,7 +108,7 @@
       checkLogin() {
         api.pollLogin().catch(error => {
           this.errors.push(error);
-          window.location.replace("http://localhost:8080/weto5/listCourses.action");
+          window.location.replace("http://localhost:4545/");
         })
       },
       fetchData() {
@@ -144,6 +134,8 @@
       getUser() {
         api.getUser().then(response => {
           this.$store.commit("logUser", JSON.parse(response.data));
+        }).catch(err => {
+          this.errors.push(err);
         })
       }
     }
