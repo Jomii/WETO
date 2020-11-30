@@ -107,9 +107,9 @@
       }
     },
     created() {
-      this.checkLogin();
-      this.checkCourseSelection();
-      this.fetchData();
+      // this.checkLogin();
+      // this.checkCourseSelection();
+      // this.fetchData();
       this.viewSubmissions();
       this.getSubmissions();
     },

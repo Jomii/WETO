@@ -1,21 +1,25 @@
 <template>
   <div class="task">
-    
+
     <div v-if="status === 'loading'" class="text-xs-center">
       <v-progress-circular indeterminate color="secondary" size="70" width="7"/>
     </div>
-    
+
     <div v-if="status === 'error'" class="text-xs-center">
       <h4>An error has occurred</h4>
     </div>
-    
+
     <div v-if="status === 'normal'">
       <h1 class="ma-8">{{ taskName }}</h1>
-      
-      <v-expansion-panels>
-        <v-expansion-panel v-for="element in backendResponse.elements" :key="element.questionId" class="ma-5 mr-8">
-          <div v-if="element.contentElementType === HTML" v-html="element.html" clasS="ma-3"/>
-          <div v-else>
+
+      <div v-if="elements.length > 0 && elements[0].contentElementType === HTML" id="html">
+        <div v-html="backendResponse.elements[0].html" id="task"/>
+        <submission id="submission"/>
+        <grading id="grading"/>
+      </div>
+      <v-expansion-panels v-else>
+        <v-expansion-panel v-for="element in elements" :key="element.questionId" class="ma-5 mr-8">
+          <div>
             <v-expansion-panel-header>
               <h2>
                 {{ element.questionName }}
@@ -23,7 +27,7 @@
             </v-expansion-panel-header>
             <div v-if="element.contentElementType !== SURVEY">
               <div v-html="element.questionTexts[0]" class="ml-5"></div>
-              
+
               <v-expansion-panel-content v-if="element.contentElementType === MULTIPLE_CHOICE">
                 <single-choice-quiz v-if="element.singleAnswer" :element="element"
                                     :taskId="taskId" :tabId="tabId" :dbId="dbId"
@@ -32,34 +36,34 @@
                                    :taskId="taskId" :tabId="tabId" :dbId="dbId"
                                    :quizOpen="backendResponse.quizOpen"/>
               </v-expansion-panel-content>
-              
+
               <v-expansion-panel-content v-else-if="element.contentElementType === ESSAY">
                 <essay-quiz :element="element" :taskId="taskId" :tabId="tabId" :dbId="dbId"
                             :quizOpen="backendResponse.quizOpen"/>
               </v-expansion-panel-content>
-              
+
               <v-expansion-panel-content v-else-if="element.contentElementType === PROGRAM">
                 <code-quiz :element="element" :taskId="taskId" :tabId="tabId" :dbId="dbId"
                            :quizOpen="backendResponse.quizOpen"/>
               </v-expansion-panel-content>
-            
+
             </div>
             <v-expansion-panel-content v-else>
               <survey-quiz :element="element" :taskId="taskId" :tabId="tabId" :dbId="dbId"
                            :quizOpen="backendResponse.quizOpen"/>
             </v-expansion-panel-content>
-          
+
           </div>
         </v-expansion-panel>
       </v-expansion-panels>
-      
+
       <div v-if="typeof subTasks !== undefined">
         <div v-for="subTask in subTasks" :key="subTask.id">
           <v-btn rounded class="mb-2" @click="switchTask(subTask.id)">{{ subTask.name }}</v-btn>
         </div>
       </div>
     </div>
-  
+
   </div>
 </template>
 
@@ -71,6 +75,8 @@
   import SingleChoiceQuiz from "../components/SingleChoiceQuiz";
   import MultiChoiceQuiz from '../components/MultiChoiceQuiz'
   import SurveyQuiz from '../components/SurveyQuiz'
+  import Submission from './Submissions'
+  import Grading from './Grading'
 
   export default {
     name: 'task',
@@ -107,6 +113,9 @@
       },
       subTasks() {
         return this.$store.getters.subTasks;
+      },
+      elements() {
+        return this.backendResponse.elements;
       }
     },
     created() {
@@ -124,13 +133,15 @@
       EssayQuiz,
       SingleChoiceQuiz,
       MultiChoiceQuiz,
-      SurveyQuiz
+      SurveyQuiz,
+      Submission,
+      Grading
     },
     methods: {
       checkLogin() {
         api.pollLogin().catch(error => {
           this.errors.push(error);
-          window.location.replace("http://localhost:8080/weto5/listCourses.action");
+          this.$router.replace('/');
         })
       },
       fetchData() {
@@ -162,5 +173,20 @@
 </script>
 
 <style>
+  #html {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #html > * {
+    margin-bottom: 1em;
+  }
+  #task {
+    margin: 1em;
+  }
 
+  @media screen and (min-width: 1366px){
+    #submission { max-width: 80vw;}
+    #grading { max-width: 80vw;}
+  }
 </style>
