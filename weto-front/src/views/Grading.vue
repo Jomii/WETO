@@ -1,8 +1,16 @@
 <template>
-  <div class="grading">
-    <h1>This is a grading page</h1>
-    <TaskGrade />
-  </div>
+    <v-expansion-panels>
+      <v-expansion-panel key="grading">
+        <v-expansion-panel-header>
+          <h2>Grading</h2>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <div class="grading">
+            <TaskGrade />
+          </div>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
 </template>
 
 <script>
@@ -61,3 +69,8 @@
     }
   }
 </script>
+<style scoped>
+  h2 {
+    color: #32005C;
+  }
+</style>
